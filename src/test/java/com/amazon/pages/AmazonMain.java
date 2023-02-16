@@ -20,6 +20,7 @@ public class AmazonMain {
     @FindBy(xpath = "(//span[.='English'])[1]")
 
     public WebElement english;
-
+    @FindBy(id = "twotabsearchtextbox")
+    public WebElement searchBox;
 
 }

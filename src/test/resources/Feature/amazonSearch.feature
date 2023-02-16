@@ -8,6 +8,5 @@ Feature: Amazon search feature
 
     When user write in the search box anything
 
-
     Then user is on the target page what written in the search box
 
