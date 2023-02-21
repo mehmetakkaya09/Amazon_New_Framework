@@ -20,6 +20,7 @@ public class AmazonSearch {
     @When("user write in the search box anything")
     public void user_write_in_the_search_box_anything() {
         pages.searchBox.sendKeys("Iphone" + Keys.ENTER);
+
     }
 
     @Then("user is on the target page what written in the search box")
