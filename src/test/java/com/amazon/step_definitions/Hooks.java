@@ -1,9 +1,9 @@
 package com.amazon.step_definitions;
 
-import io.cucumber.java.After;
-import io.cucumber.java.AfterStep;
-import io.cucumber.java.Before;
-import io.cucumber.java.BeforeStep;
+import com.amazon.utilities.Driver;
+import io.cucumber.java.*;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 
 public class Hooks {
 
@@ -12,8 +12,13 @@ public class Hooks {
         System.out.println("Before Scenario");
     }
     @After
-    public void afterScenario() {
-        System.out.println("After Scenario");
+    public void afterScenario(Scenario scenario) {
+
+        if (scenario.isFailed()) {
+            byte[] screenshot = ((TakesScreenshot) Driver.getDriver()).getScreenshotAs(OutputType.BYTES);
+            scenario.attach(screenshot, "image/png", scenario.getName());
+        }
+
     }
     @BeforeStep
     public void beforeStep() {
