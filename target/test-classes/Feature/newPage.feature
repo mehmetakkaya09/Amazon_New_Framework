@@ -1,4 +1,4 @@
-@wip
+
 Feature: anything
   @db
   Scenario: create
