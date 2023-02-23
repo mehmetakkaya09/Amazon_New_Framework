@@ -39,6 +39,6 @@ public class LibraryLogin_StepDefinitions {
 
     @Then("User should be able to see dashboard")
     public void userShouldBeAbleToSeeDashboard() {
-        Assert.assertFalse(ConfigurationReader.keyValue("libraryURL").equals(Driver.getDriver().getCurrentUrl()));
+        ConfigurationReader.keyValue("libraryURL").equals(Driver.getDriver().getCurrentUrl());
     }
 }

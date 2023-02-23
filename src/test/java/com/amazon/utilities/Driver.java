@@ -11,33 +11,38 @@ import java.util.concurrent.TimeUnit;
 public class Driver {
 
     private Driver() {
-
     }
-
-    private static WebDriver driver;
+    private static InheritableThreadLocal<WebDriver> driverPool = new InheritableThreadLocal<>();
+    //private static WebDriver driver;
 
     public static WebDriver getDriver() {
 
-        if (driver == null) {
+        if (driverPool.get() == null) {
 
             String browser = ConfigurationReader.keyValue("browser");
 
             if (browser.equalsIgnoreCase("chrome")) {
                 WebDriverManager.chromedriver().setup();
-                driver = new ChromeDriver();
-                driver.manage().window().maximize();
-                driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+                driverPool.set(new ChromeDriver());
+                driverPool.get().manage().window().maximize();
+                driverPool.get().manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 
             } else if (browser.equalsIgnoreCase("firefox")) {
                 WebDriverManager.firefoxdriver().setup();
-                driver = new FirefoxDriver();
-                driver.manage().window().maximize();
-                driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+                driverPool.set(new FirefoxDriver());
+                driverPool.get().manage().window().maximize();
+                driverPool.get().manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
             }
 
         }
-        return driver;
+        return driverPool.get();
+    }
 
+    public static void quitDriver() {
+        if (driverPool.get()!= null) {
+            driverPool.get().quit();
+            driverPool.remove();
+        }
     }
 
 
